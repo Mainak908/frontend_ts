@@ -1,103 +1,288 @@
-import Image from "next/image";
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Link from "next/link";
 
-export default function Home() {
+import { useAuthStore } from "@/store";
+import { FaOpencart } from "react-icons/fa6";
+
+const bikes = [
+  {
+    id: 1,
+    name: "Bajaj",
+    description: "Affordable and reliable motorcycles for daily use.",
+    price: 1200,
+    image: "bajaj.png",
+  },
+  {
+    id: 2,
+    name: "BMW",
+    description: "Premium bikes with advanced features and luxury designs.",
+    price: 15000,
+    image: "bmw.png",
+  },
+  {
+    id: 3,
+    name: "Hero",
+    description: "Fuel-efficient bikes designed for the everyday rider.",
+    price: 800,
+    image: "hero.png",
+  },
+  {
+    id: 4,
+    name: "Honda",
+    description: "Innovative and durable motorcycles with excellent mileage.",
+    price: 1000,
+    image: "honda.png",
+  },
+  {
+    id: 5,
+    name: "Benelli",
+    description:
+      "Stylish bikes with a perfect balance of power and performance.",
+    price: 4000,
+    image: "benelli.png",
+  },
+  {
+    id: 6,
+    name: "Kawasaki",
+    description: "High-performance sports bikes for thrill-seekers.",
+    price: 8000,
+    image: "kawasaki.png",
+  },
+  {
+    id: 7,
+    name: "KTM",
+    description: "Lightweight bikes with superior handling and power.",
+    price: 5000,
+    image: "ktm.png",
+  },
+  {
+    id: 8,
+    name: "Yamaha",
+    description: "Reliable bikes with a legacy of innovation and speed.",
+    price: 3000,
+    image: "yamaha.png",
+  },
+  {
+    id: 9,
+    name: "TVS",
+    description: "Budget-friendly bikes with robust build quality.",
+    price: 900,
+    image: "tvs.png",
+  },
+];
+export const CartIcon = () => {
+  const { cartItems } = useAuthStore();
+
+  let len = cartItems.length;
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <Link className="mr-4" href={"/Cart"}>
+      <div className="relative">
+        <FaOpencart className="relative flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full shadow-lg" />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {len > 0 && (
+          <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+            {len}
+          </span>
+        )}
+      </div>
+    </Link>
+  );
+};
+const Header = () => (
+  <header className="header fixed w-screen z-50">
+    <div className="logo">
+      <span className="logo-text">motox-part</span>
+    </div>
+    <div className="search-bar">
+      <input type="text" placeholder="Search: Fogg Lamps" />
+      <select className="category-dropdown">
+        <option>All categories</option>
+      </select>
+      <button className="search-button">🔍</button>
+    </div>
+    <div className="user-options flex">
+      <Link href={"/signin"}>
+        <Button variant="outline">SignIn</Button>
+      </Link>
+
+      <Link href={"/signin"}>
+        <Button variant="outline">SignUp</Button>
+      </Link>
+    </div>
+    <CartIcon />
+  </header>
+);
+
+const NavBar = () => (
+  <nav className="navbar fixed w-screen mt-[62px] z-50">
+    <a href="#">Home</a>
+    <a href="#">All Collections</a>
+    <a href="#">Shop By Bike ▼</a>
+    <a href="#">Shop By Spares ▼</a>
+    <a href="#">Shop By Accessories ▼</a>
+    <a href="#">Wholesale Price</a>
+    <a href="#">Track Order ▼</a>
+    <a href="#">FAQ</a>
+    <a href="#">Contact Us</a>
+  </nav>
+);
+
+const ShopByBike = () => (
+  <section className="shop-by-bike">
+    <h2>𝐒𝐡𝐨𝐩 𝐁𝐲 𝐁𝐢𝐤𝐞</h2>
+
+    <Carousel className="w-[1290px] mx-auto scrollbar-hide">
+      <CarouselContent className="">
+        {bikes.map((bike, index) => (
+          <CarouselItem key={index} className="pl-1 md:basis-1/2 lg:basis-1/5">
+            <Link className="item" key={index} href={`/Parts/?bike=${bike.id}`}>
+              <img src={bike.image} alt="" />
+              <p className="text-black">{bike.name}</p>
+            </Link>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  </section>
+);
+const Helmets = () => {
+  const { addToCart } = useAuthStore();
+
+  return (
+    <section className="helmets">
+      <h1 className="text-black text-xl">𝐎𝐮𝐫 𝐇𝐞𝐥𝐦𝐞𝐭𝐬</h1>
+      <div className="helmet-container">
+        {[
+          { src: "helmate1.png", name: "Srm", price: 100, quantity: 1, id: 1 },
+          {
+            src: "helmate2.png",
+            name: "Saber Single Colors Helmet",
+            price: 120,
+            quantity: 1,
+            id: 2,
+          },
+          {
+            src: "helmate3.png",
+            name: "Saber X-Sport color Helmet",
+            price: 150,
+            quantity: 1,
+            id: 3,
+          },
+        ].map((helmet, index) => (
+          <div className="helmet-item" key={index}>
+            <img src={helmet.src} alt={helmet.name} className="helmet-image" />
+            <h3 className="text-black">{helmet.name}</h3>
+            <p className="price text-black">${helmet.price}</p>
+            <button className="add-to-cart" onClick={() => addToCart(helmet)}>
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => (
+  <footer className="footer">
+    <div className="footer-container">
+      {[
+        {
+          title: "Information",
+          links: [
+            "Contact Us",
+            "FAQs",
+            "Track Order",
+            "Terms Of Service",
+            "Refund Policy",
+          ],
+        },
+        {
+          title: "About Us",
+          links: [
+            "About Us",
+            "Privacy Policy",
+            "Terms And Conditions",
+            "Refund / Cancellation Policy",
+            "Shipping Policy",
+          ],
+        },
+      ].map((section, index) => (
+        <div className="footer-section" key={index}>
+          <h3>{section.title}</h3>
+          <ul>
+            {section.links.map((link, idx) => (
+              <li key={idx}>
+                <a href="#">{link}</a>
+              </li>
+            ))}
+          </ul>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
+      ))}
+      <div className="footer-section">
+        <h3>Subscribe to our emails</h3>
+        <p>
+          Subscribe to get notified about product launches, special offers, and
+          news.
+        </p>
+        <form>
+          <input type="email" placeholder="Email" />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div className="footer-bottom">
+      <div className="footer-country">
+        <label htmlFor="country">Country/region</label>
+        <select id="country">
+          <option value="india">India | INR ₹</option>
+        </select>
+      </div>
+      <p>© 2024, Motox Parts</p>
+      <p>Made with love by ❤️ GNIT BOYS</p>
+    </div>
+    <div className="footer-social">
+      {[
+        "facebook-icon.png",
+        "instagram-icon.png",
+        "linkedin-icon.png",
+        "youtube-icon.png",
+      ].map((icon, index) => (
+        <a href="#" key={index}>
+          <img src={icon} alt={icon.split("-")[0]} />
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ))}
+    </div>
+  </footer>
+);
+
+const App = () => {
+  return (
+    <div className="">
+      <Header />
+      <NavBar />
+      <div className="pt-[105px]">
+        <img src="jaydeb.png" alt="" className="h-full w-full" />
+        <div>
+          <i className="fa-brands fa-facebook"></i>
+        </div>
+      </div>
+      <ShopByBike />
+      <Helmets />
+      <Footer />
     </div>
   );
-}
+};
+
+export default App;
