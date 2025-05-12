@@ -1,5 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 const bikes = [
   {
     id: 1,
@@ -100,5 +101,12 @@ const ProductPage = () => {
     </div>
   );
 };
+const Page = () => {
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <ProductPage />
+    </Suspense>
+  );
+};
 
-export default ProductPage;
+export default Page;

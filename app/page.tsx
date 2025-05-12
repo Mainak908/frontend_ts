@@ -78,49 +78,46 @@ const bikes = [
     image: "tvs.png",
   },
 ];
-export const CartIcon = () => {
+
+const Header = () => {
   const { cartItems } = useAuthStore();
 
   let len = cartItems.length;
-
   return (
-    <Link className="mr-4" href={"/Cart"}>
-      <div className="relative">
-        <FaOpencart className="relative flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full shadow-lg" />
-
-        {len > 0 && (
-          <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-            {len}
-          </span>
-        )}
+    <header className="header fixed w-screen z-50">
+      <div className="logo">
+        <span className="logo-text">motox-part</span>
       </div>
-    </Link>
+      <div className="search-bar">
+        <input type="text" placeholder="Search: Fogg Lamps" />
+        <select className="category-dropdown">
+          <option>All categories</option>
+        </select>
+        <button className="search-button">🔍</button>
+      </div>
+      <div className="user-options flex">
+        <Link href={"/signin"}>
+          <Button variant="outline">SignIn</Button>
+        </Link>
+
+        <Link href={"/signin"}>
+          <Button variant="outline">SignUp</Button>
+        </Link>
+      </div>
+      <Link className="mr-4" href={"/Cart"}>
+        <div className="relative">
+          <FaOpencart className="relative flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full shadow-lg" />
+
+          {len > 0 && (
+            <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+              {len}
+            </span>
+          )}
+        </div>
+      </Link>
+    </header>
   );
 };
-const Header = () => (
-  <header className="header fixed w-screen z-50">
-    <div className="logo">
-      <span className="logo-text">motox-part</span>
-    </div>
-    <div className="search-bar">
-      <input type="text" placeholder="Search: Fogg Lamps" />
-      <select className="category-dropdown">
-        <option>All categories</option>
-      </select>
-      <button className="search-button">🔍</button>
-    </div>
-    <div className="user-options flex">
-      <Link href={"/signin"}>
-        <Button variant="outline">SignIn</Button>
-      </Link>
-
-      <Link href={"/signin"}>
-        <Button variant="outline">SignUp</Button>
-      </Link>
-    </div>
-    <CartIcon />
-  </header>
-);
 
 const NavBar = () => (
   <nav className="navbar fixed w-screen mt-[62px] z-50">
